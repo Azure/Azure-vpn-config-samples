@@ -1,0 +1,326 @@
+root@Azure_SRX> show configuration
+## Last commit: 2016-0X-01 21:09:16 EST by root
+version 12.1X44-D35.5;
+system {
+    host-name Azure_SRX;
+    time-zone EST;
+    root-authentication {
+        encrypted-password "$1$KsoyOAzJ$F2jhqDFxaokK/P1FFln1a0"; ## SECRET-DATA
+    }
+    name-server {
+        8.8.8.8;
+        8.8.4.4;
+    }
+    name-resolution {
+        no-resolve-on-input;
+    }
+    services {
+        ssh;
+        telnet;
+        web-management {
+            http {
+                interface vlan.1;
+            }
+            https {
+                system-generated-certificate;
+                interface vlan.1;
+            }
+            session {
+                idle-timeout 60;
+            }
+        }
+        dhcp {
+            pool 192.168.1.0/24 {
+                address-range low 192.168.1.2 high 192.168.1.254;
+                router {
+                    192.168.1.1;
+                }
+            }
+        }
+    }
+    syslog {
+        archive size 100k files 3;
+        user * {
+            any emergency;
+        }
+        file messages {
+            any critical;
+            authorization info;
+        }
+        file interactive-commands {
+            interactive-commands error;
+        }
+    }
+    max-configurations-on-flash 5;
+    max-configuration-rollbacks 5;
+    license {
+        autoupdate {
+            url https://ae1.juniper.net/junos/key_retrieval;
+        }
+    }
+    ntp {
+        server us.ntp.pool.org;
+    }
+}
+interfaces {
+    fe-0/0/0 {
+        unit 0 {
+            family inet {
+                address 206.X.X.X/24;
+            }
+        }
+    }
+    fe-0/0/1 {
+        unit 0 {
+            family ethernet-switching {
+                vlan {
+                    members vlan1;
+                }
+            }
+        }
+    }
+    fe-0/0/2 {
+        unit 0 {
+            family ethernet-switching {
+                vlan {
+                    members vlan1;
+                }
+            }
+        }
+    }
+    fe-0/0/3 {
+        unit 0 {
+            family ethernet-switching {
+                vlan {
+                    members vlan1;
+                }
+            }
+        }
+    }
+    fe-0/0/4 {
+        unit 0 {
+            family ethernet-switching {
+                vlan {
+                    members vlan1;
+                }
+            }
+        }
+    }
+    fe-0/0/5 {
+        unit 0 {
+            family ethernet-switching {
+                vlan {
+                    members vlan1;
+                }
+            }
+        }
+    }
+    fe-0/0/6 {
+        unit 0 {
+            family ethernet-switching {
+                vlan {
+                    members vlan1;
+                }
+            }
+        }
+    }
+    fe-0/0/7 {
+        unit 0 {
+            family ethernet-switching {
+                vlan {
+                    members vlan1;
+                }
+            }
+        }
+    }
+    st0 {
+        unit 0 {
+            family inet;
+        }
+    }
+    vlan {
+        unit 1 {
+            family inet {
+                address 192.168.1.1/24;
+            }
+        }
+    }
+}
+routing-options {
+    static {
+        route 0.0.0.0/0 next-hop 206.X.X.1;
+        route 10.0.0.0/16 next-hop st0.0;
+    }
+}
+protocols {
+    stp;
+}
+security {
+    ike {
+        proposal azure-proposal {
+            authentication-method pre-shared-keys;
+            dh-group group2;
+            authentication-algorithm sha1;
+            encryption-algorithm aes-256-cbc;
+            lifetime-seconds 28800;
+        }
+        policy azure-policy {
+            mode main;
+            proposals azure-proposal;
+            pre-shared-key ascii-text "$9$h08cvWdbs2aZEclM8xdVfTQ3nCO1RSlKREs2goGUjHq.PQz36CA03nlKv87Nikqmfz9ApIhSqmuO1RleYg4ajHq.5TFndb"; ## SECRET-DATA
+        }
+        gateway azure-gateway {
+            ike-policy azure-policy;
+            address 40.X.X.X;
+            external-interface fe-0/0/0.0;
+            version v2-only;
+        }
+    }
+    ipsec {
+        proposal azure-ipsec-proposal {
+            protocol esp;
+            authentication-algorithm hmac-sha1-96;
+            encryption-algorithm aes-256-cbc;
+            lifetime-seconds 3600;
+        }
+        policy azure-vpn-policy {
+            proposals azure-ipsec-proposal;
+        }
+        vpn azure-ipsec-vpn {
+            bind-interface st0.0;
+            ike {
+                gateway azure-gateway;
+                ipsec-policy azure-vpn-policy;
+            }
+        }
+    }
+    flow {
+        tcp-mss {
+            ipsec-vpn {
+                mss 1350;
+            }
+        }
+    }
+    screen {
+        ids-option untrust-screen {
+            icmp {
+                ping-death;
+            }
+            ip {
+                source-route-option;
+                tear-drop;
+            }
+            tcp {
+                syn-flood {
+                    alarm-threshold 1024;
+                    attack-threshold 200;
+                    source-threshold 1024;
+                    destination-threshold 2048;
+                    timeout 20;
+                }
+                land;
+            }
+        }
+    }
+    nat {
+        source {
+            rule-set nsw_srcnat {
+                from zone Internal;
+                to zone Internet;
+                rule nsw-src-interface {
+                    match {
+                        source-address 0.0.0.0/0;
+                        destination-address 0.0.0.0/0;
+                    }
+                    then {
+                        source-nat {
+                            interface;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    policies {
+        from-zone Internal to-zone Internet {
+            policy All_Internal_Internet {
+                match {
+                    source-address any;
+                    destination-address any;
+                    application any;
+                }
+                then {
+                    permit;
+                }
+            }
+            policy azure-security-Internal-to-Internet-0 {
+                match {
+                    source-address onprem-networks-1;
+                    destination-address azure-networks-1;
+                    application any;
+                }
+                then {
+                    permit;
+                }
+            }
+        }
+        from-zone Internet to-zone Internal {
+            policy azure-security-Internet-to-Internal-0 {
+                match {
+                    source-address azure-networks-1;
+                    destination-address onprem-networks-1;
+                    application any;
+                }
+                then {
+                    permit;
+                }
+            }
+        }
+    }
+    zones {
+        security-zone Internal {
+            address-book {
+                address onprem-networks-1 192.168.1.0/24;
+            }
+            host-inbound-traffic {
+                system-services {
+                    ike;
+                }
+            }
+            interfaces {
+                vlan.1 {
+                    host-inbound-traffic {
+                        system-services {
+                            ping;
+                            dhcp;
+                            http;
+                            https;
+                            ssh;
+                            telnet;
+                        }
+                    }
+                }
+            }
+        }
+        security-zone Internet {
+            address-book {
+                address azure-networks-1 10.0.0.0/16;
+            }
+            host-inbound-traffic {
+                system-services {
+                    ike;
+                }
+            }
+            interfaces {
+                fe-0/0/0.0;
+                st0.0;
+            }
+        }
+    }
+}
+vlans {
+    vlan1 {
+        vlan-id 3;
+        l3-interface vlan.1;
+    }
+}

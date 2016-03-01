@@ -1,0 +1,140 @@
+ssg5-serial-> get config
+Total Config size 4995:
+unset key protection enable
+set clock timezone 0
+set vrouter trust-vr sharable
+set vrouter "untrust-vr"
+exit
+set vrouter "trust-vr"
+unset auto-route-export
+exit
+set alg appleichat enable
+unset alg appleichat re-assembly enable
+set alg sctp enable
+set auth-server "Local" id 0
+set auth-server "Local" server-name "Local"
+set auth default auth server "Local"
+set auth radius accounting port 1646
+set admin name "root"
+set admin password "nA7aCVr0M+hCcRhBZsFEJiAt5aIhcn"
+set admin auth web timeout 10
+set admin auth dial-in timeout 3
+set admin auth server "Local"
+set admin format dos
+set zone "Trust" vrouter "trust-vr"
+set zone "Untrust" vrouter "trust-vr"
+set zone "DMZ" vrouter "trust-vr"
+set zone "VLAN" vrouter "trust-vr"
+set zone "Untrust-Tun" vrouter "trust-vr"
+set zone "Trust" tcp-rst
+set zone "Untrust" block
+unset zone "Untrust" tcp-rst
+set zone "MGT" block
+unset zone "V1-Trust" tcp-rst
+unset zone "V1-Untrust" tcp-rst
+set zone "DMZ" tcp-rst
+unset zone "V1-DMZ" tcp-rst
+unset zone "VLAN" tcp-rst
+set zone "Untrust" screen tear-drop
+set zone "Untrust" screen syn-flood
+set zone "Untrust" screen ping-death
+set zone "Untrust" screen ip-filter-src
+set zone "Untrust" screen land
+set zone "V1-Untrust" screen tear-drop
+set zone "V1-Untrust" screen syn-flood
+set zone "V1-Untrust" screen ping-death
+set zone "V1-Untrust" screen ip-filter-src
+set zone "V1-Untrust" screen land
+set interface "ethernet0/0" zone "Untrust"
+set interface "ethernet0/1" zone "DMZ"
+set interface "bgroup0" zone "Trust"
+set interface "tunnel.1" zone "Untrust"
+set interface bgroup0 port ethernet0/2
+set interface bgroup0 port ethernet0/3
+set interface bgroup0 port ethernet0/4
+set interface bgroup0 port ethernet0/5
+set interface bgroup0 port ethernet0/6
+unset interface vlan1 ip
+set interface ethernet0/0 ip 206.X.X.6X/24
+set interface ethernet0/0 route
+set interface bgroup0 ip 192.168.1.1/24
+set interface bgroup0 nat
+set interface tunnel.1 ip unnumbered interface bgroup0
+set interface ethernet0/0 gateway 206.X.X.1
+unset interface vlan1 bypass-others-ipsec
+unset interface vlan1 bypass-non-ip
+set interface ethernet0/0 ip manageable
+set interface bgroup0 ip manageable
+set interface bgroup0 manage mtrace
+set interface bgroup0 dhcp server service
+set interface bgroup0 dhcp server auto
+set interface bgroup0 dhcp server option dns1 8.8.8.8
+set interface bgroup0 dhcp server option dns2 8.8.4.4
+set interface bgroup0 dhcp server ip 192.168.1.33 to 192.168.1.126
+unset interface bgroup0 dhcp server config next-server-ip
+set interface "serial0/0" modem settings "USR" init "AT&F"
+set interface "serial0/0" modem settings "USR" active
+set interface "serial0/0" modem speed 115200
+set interface "serial0/0" modem retry 3
+set interface "serial0/0" modem interval 10
+set interface "serial0/0" modem idle-time 10
+set flow tcp-mss
+unset flow tcp-syn-check
+unset flow tcp-syn-bit-check
+set flow reverse-route clear-text prefer
+set flow reverse-route tunnel always
+set flow vpn-tcp-mss 1350
+set pki authority default scep mode "auto"
+set pki x509 default cert-path partial
+set address "Trust" "onprem-networks-1" 192.168.1.0 255.255.255.0
+set address "Untrust" "azure-networks-1" 10.0.0.0 255.255.0.0
+set crypto-policy
+exit
+set ike gateway ikev2 "azure-gateway" address 40.X.X.X outgoing-interface "ethernet0/0" preshare "ogSJTdwBNf58VIsl8aCB4aJOcBnsRK3HXdaiQDgKNZVD+gHggpX8e2Os0Ha/wAep0+3xIEdYL2eC" sec-level compatible
+set ike gateway "azure-gateway" dpd-liveness interval 10
+set ike respond-bad-spi 1
+set ike ikev2 ike-sa-soft-lifetime 60
+unset ike ikeid-enumeration
+unset ike dos-protection
+unset ipsec access-session enable
+set ipsec access-session maximum 5000
+set ipsec access-session upper-threshold 0
+set ipsec access-session lower-threshold 0
+set ipsec access-session dead-p2-sa-timeout 0
+unset ipsec access-session log-error
+unset ipsec access-session info-exch-connected
+unset ipsec access-session use-error-log
+set vpn "azure-ipsec-vpn" gateway "azure-gateway" no-replay tunnel idletime 0 sec-level compatible
+set vpn "azure-ipsec-vpn" id 0x1 bind interface tunnel.1
+set vrouter "untrust-vr"
+exit
+set vrouter "trust-vr"
+exit
+set url protocol websense
+exit
+set policy id 3 from "Untrust" to "Trust"  "azure-networks-1" "onprem-networks-1" "ANY" permit
+set policy id 3
+exit
+set policy id 2 from "Trust" to "Untrust"  "onprem-networks-1" "azure-networks-1" "ANY" permit
+set policy id 2
+exit
+set policy id 1 from "Trust" to "Untrust"  "Any" "Any" "ANY" permit
+set policy id 1
+exit
+set nsmgmt bulkcli reboot-timeout 60
+set ssh version v2
+set config lock timeout 5
+unset license-key auto-update
+set telnet client enable
+set snmp port listen 161
+set snmp port trap 162
+set vrouter "untrust-vr"
+exit
+set vrouter "trust-vr"
+unset add-default-route
+set route 10.0.0.0/16 interface tunnel.1
+exit
+set vrouter "untrust-vr"
+exit
+set vrouter "trust-vr"
+exit

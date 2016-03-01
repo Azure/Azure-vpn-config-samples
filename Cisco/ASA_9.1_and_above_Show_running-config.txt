@@ -1,8 +1,13 @@
-
+ciscoasa# Show running-config
+: Saved
+:
+: Serial Number: XXXXXXXX
+: Hardware:   ASA5505, 512 MB RAM, CPU Geode 500 MHz
+:
 ASA Version 9.2(2)4
 !
 hostname ciscoasa
-enable password XXXXXXXXXXXXX encrypted
+enable password 8Ry2YjIyt7RRXU24 encrypted
 names
 !
 interface Ethernet0/0
@@ -30,22 +35,21 @@ interface Vlan1
 interface Vlan2
  nameif outside
  security-level 0
- ip address 1.0.0.1 255.255.255.0
+ ip address 206.X.X.X 255.255.255.0
 !
 ftp mode passive
 object network obj_any
  subnet 0.0.0.0 0.0.0.0
+object network Gateway
+ host 206.X.X.1
 object-group network azure-networks
- network-object 10.0.0.0 255.0.0.0
+ description Azure-Virtual-Network
+ network-object 10.0.0.0 255.255.255.0
 object-group network onprem-networks
+ description On-premises Network
  network-object 192.168.1.0 255.255.255.0
-object-group protocol TCPUDP
- protocol-object udp
- protocol-object tcp
-access-list azure-vpn-acl extended permit ip object-group onprem-networks object-group azure-networks
-access-list outside_cryptomap extended permit ip 192.168.1.0 255.255.255.0 object-group azure-networks
-no pager
-logging enable
+access-list azure-vpn-acl extended permit ip object-group onprem-networks object                                                                             -group azure-networks
+pager lines 24
 logging asdm informational
 mtu inside 1500
 mtu outside 1500
@@ -53,13 +57,13 @@ icmp unreachable rate-limit 1 burst-size 1
 no asdm history enable
 arp timeout 14400
 no arp permit-nonconnected
-nat (inside,outside) source static onprem-networks onprem-networks destination static azure-networks azure-networks
+nat (inside,outside) source static onprem-networks onprem-networks destination s                                                                             tatic azure-networks azure-networks
 !
 object network obj_any
  nat (inside,outside) dynamic interface
 !
 nat (inside,outside) after-auto source dynamic any interface
-route outside 0.0.0.0 0.0.0.0 1.0.0.1 1
+route outside 0.0.0.0 0.0.0.0 206.X.X.1 1
 timeout xlate 3:00:00
 timeout pat-xlate 0:00:30
 timeout conn 1:00:00 half-closed 0:10:00 udp 0:02:00 icmp 0:00:02
@@ -76,6 +80,7 @@ no snmp-server location
 no snmp-server contact
 sysopt connection tcpmss 1350
 sysopt connection preserve-vpn-flows
+crypto ipsec ikev1 transform-set azure-ipsec-proposal-set esp-aes-256 esp-sha-hm                                                                             ac
 crypto ipsec ikev1 transform-set ESP-AES-128-SHA esp-aes esp-sha-hmac
 crypto ipsec ikev1 transform-set ESP-AES-128-MD5 esp-aes esp-md5-hmac
 crypto ipsec ikev1 transform-set ESP-AES-192-SHA esp-aes-192 esp-sha-hmac
@@ -89,13 +94,13 @@ crypto ipsec ikev1 transform-set ESP-DES-MD5 esp-des esp-md5-hmac
 crypto ipsec security-association lifetime seconds 3600
 crypto ipsec security-association lifetime kilobytes 102400000
 crypto ipsec security-association pmtu-aging infinite
-crypto map outside_map1 1 match address outside_cryptomap
-crypto map outside_map1 1 set peer 137.X.X.X
-crypto map outside_map1 1 set ikev1 transform-set ESP-AES-256-SHA ESP-AES-256-MD5
-crypto map outside_map1 interface outside
+crypto map azure-crypto-map 1 match address azure-vpn-acl
+crypto map azure-crypto-map 1 set peer 104.X.X.X
+crypto map azure-crypto-map 1 set ikev1 transform-set azure-ipsec-proposal-set
+crypto map azure-crypto-map interface outside
 crypto ca trustpool policy
 crypto ikev1 enable outside
-crypto ikev1 policy 30
+crypto ikev1 policy 5
  authentication pre-share
  encryption aes-256
  hash sha
@@ -110,19 +115,16 @@ console timeout 0
 dhcpd auto_config outside
 !
 dhcpd address 192.168.1.5-192.168.1.36 inside
-dhcpd dns X.X.X.3 X.X.X.4 interface inside
+dhcpd dns 8.8.8.8 8.8.4.4 interface inside
 dhcpd enable inside
 !
 threat-detection basic-threat
 threat-detection statistics access-list
 no threat-detection statistics tcp-intercept
-group-policy Azure internal
-group-policy Azure attributes
- vpn-tunnel-protocol ikev1 l2tp-ipsec
-tunnel-group 137.X.X.X type ipsec-l2l
-tunnel-group 137.X.X.X general-attributes
- default-group-policy Azure
-tunnel-group 137.X.X.X ipsec-attributes
+group-policy DfltGrpPolicy attributes
+ vpn-tunnel-protocol ikev1 l2tp-ipsec ssl-clientless
+tunnel-group 104.X.X.X type ipsec-l2l
+tunnel-group 104.X.X.X ipsec-attributes
  ikev1 pre-shared-key *****
 !
 class-map inspection_default
@@ -153,4 +155,8 @@ policy-map global_policy
   inspect icmp
   inspect icmp error
 !
-
+service-policy global_policy global
+prompt hostname context
+no call-home reporting anonymous
+Cryptochecksum:717c63b6e9e5367d33a69f4281ee7d33
+: end
