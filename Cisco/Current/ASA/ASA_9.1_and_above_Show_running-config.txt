@@ -48,7 +48,7 @@ object-group network azure-networks
 object-group network onprem-networks
  description On-premises Network
  network-object 192.168.1.0 255.255.255.0
-access-list azure-vpn-acl extended permit ip object-group onprem-networks object                                                                             -group azure-networks
+access-list azure-vpn-acl extended permit ip object-group onprem-networks object-group azure-networks
 pager lines 24
 logging asdm informational
 mtu inside 1500
@@ -57,7 +57,7 @@ icmp unreachable rate-limit 1 burst-size 1
 no asdm history enable
 arp timeout 14400
 no arp permit-nonconnected
-nat (inside,outside) source static onprem-networks onprem-networks destination s                                                                             tatic azure-networks azure-networks
+nat (inside,outside) source static onprem-networks onprem-networks destination static azure-networks azure-networks
 !
 object network obj_any
  nat (inside,outside) dynamic interface
@@ -80,7 +80,7 @@ no snmp-server location
 no snmp-server contact
 sysopt connection tcpmss 1350
 sysopt connection preserve-vpn-flows
-crypto ipsec ikev1 transform-set azure-ipsec-proposal-set esp-aes-256 esp-sha-hm                                                                             ac
+crypto ipsec ikev1 transform-set azure-ipsec-proposal-set esp-aes-256 esp-sha-hmac
 crypto ipsec ikev1 transform-set ESP-AES-128-SHA esp-aes esp-sha-hmac
 crypto ipsec ikev1 transform-set ESP-AES-128-MD5 esp-aes esp-md5-hmac
 crypto ipsec ikev1 transform-set ESP-AES-192-SHA esp-aes-192 esp-sha-hmac
