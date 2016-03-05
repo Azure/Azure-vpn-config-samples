@@ -1,0 +1,79 @@
+Enter file contents here! Microsoft Corporation
+! Windows Azure Virtual Network
+
+! This configuration template applies to Cisco ISR 2900 Series Integrated Services Routers running IOS 15.1.
+! It configures an IPSec VPN tunnel connecting your on-premise VPN device with the Azure gateway.
+! Azure virtual network address space in this example is 10.149.0.0/16
+! On premises local network connected to ISR G0/0 is 192.168.0.0/16
+! Outside interface in ISR is G0/1
+
+! ---------------------------------------------------------------------------------------------------------------------
+! ACL rules
+! 
+! Proper ACL rules are needed for permitting cross-premise network traffic.
+! You should also allow inbound UDP/ESP traffic for the interface which will be used for the IPSec tunnel.
+! You should also allow below whichever traffic needed on the outgoing interface to make sure you dont block necessary traffic
+
+access-list 103 permit ip 192.168.0.0 0.0.255.255 10.149.0.0 0.0.255.255
+access-list 103 permit udp host <azure gateway ip> eq isakmp host <public ip of outgoing interface>
+access-list 103 permit esp host <azure gateway ip> host <public ip of outgoing interface>
+
+! ---------------------------------------------------------------------------------------------------------------------
+! Internet Key Exchange (IKE) configuration
+! 
+! This section specifies the authentication, encryption, hashing, and Diffie-Hellman group parameters for the Phase
+! 1 negotiation and the main mode security association. 
+crypto ikev2 proposal azure-proposal
+  encryption aes-cbc-256 aes-cbc-128 3des
+  integrity sha1
+  group 2
+  exit
+
+crypto ikev2 policy azure-policy
+ proposal azure-proposal
+  exit
+
+crypto ikev2 keyring azure-keyring
+ peer <azure gateway ip>
+  address <azure gateway ip>
+  pre-shared-key <psk same as azure connection>
+    exit
+  exit
+
+crypto ikev2 profile azure-profile
+ match address local interface GigabitEthernet0/1
+ match identity remote address <azure gateway ip> 255.255.255.255
+ authentication remote pre-share
+ authentication local pre-share
+ keyring local azure-keyring
+  exit
+
+! ---------------------------------------------------------------------------------------------------------------------
+! IPSec configuration
+! 
+! This section specifies encryption, authentication, tunnel mode properties for the Phase 2 negotiation
+crypto ipsec transform-set azure-ipsec-proposal-set esp-aes 256 esp-sha-hmac
+ mode tunnel
+ exit
+
+! ---------------------------------------------------------------------------------------------------------------------
+! Crypto map configuration
+!
+! This section defines a crypto profile that binds the cross-premise network traffic to the IPSec transform
+! set and remote peer.  We also bind the IPSec policy to the virtual tunnel interface, through which 
+! cross-premise traffic will be transmitted.  We have picked an arbitrary tunnel id "1" as an example. If
+! that happens to conflict with an existing virtual tunnel interface, you may choose to use a different id.
+crypto ipsec profile vti
+ set transform-set azure-ipsec-proposal-set
+ set ikev2-profile azure-profile
+  exit
+
+interface Tunnel1
+ ip address 169.254.0.1 255.255.255.0
+ ip tcp adjust-mss 1350
+ tunnel source GigabitEthernet0/1
+ tunnel mode ipsec ipv4
+ tunnel destination <azure gateway ip>
+ tunnel protection ipsec profile vti
+  exit
+
