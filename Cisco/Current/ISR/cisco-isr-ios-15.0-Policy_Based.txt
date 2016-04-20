@@ -1,0 +1,63 @@
+! Microsoft Corporation
+! Windows Azure Virtual Network
+
+! This configuration template applies to Cisco ISR 2900 Series Integrated Services Routers running IOS 15.0.
+! It configures an IPSec VPN tunnel connecting your on-premise VPN device with the Azure gateway.
+
+! ---------------------------------------------------------------------------------------------------------------------
+! ACL rules
+! 
+! Proper ACL rules are needed for permitting cross-premise network traffic.
+! You should also allow inbound UDP/ESP traffic for the interface which will be used for the IPSec tunnel.
+! In this example 10.0.0.0/8 is the on premises network & 192.168.1.0/16 is the Azure Virtual Network
+access-list 101 permit ip 10.0.0.0 0.255.255.255 192.168.0.0 0.0.255.255
+
+! ---------------------------------------------------------------------------------------------------------------------
+! Internet Key Exchange (IKE) configuration
+! 
+! This section specifies the authentication, encryption, hashing, Diffie-Hellman, and lifetime parameters for the Phase
+! 1 negotiation and the main mode security association. We have picked an arbitrary policy # "10" as an example. If
+! that happens to conflict with an existing policy, you may choose to use a different policy #.
+! In this example the Azure Gateway IP Address is 40.76.X.X
+crypto isakmp policy 10
+ authentication pre-share
+ encryption aes 256
+ hash sha
+ group 2
+ lifetime 28800
+ exit
+crypto isakmp key XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX address 40.76.X.X
+
+! ---------------------------------------------------------------------------------------------------------------------
+! IPSec configuration
+! 
+! This section specifies encryption, authentication, tunnel mode properties for the Phase 2 negotiation
+crypto ipsec transform-set azure-ipsec-proposal-set esp-aes 256 esp-sha-hmac
+ mode tunnel
+ exit
+
+! ---------------------------------------------------------------------------------------------------------------------
+! Crypto map configuration
+!
+! This section defines a crypto map that binds the cross-premise network traffic to the
+! IPSec transform set and remote peer. We have picked an arbitrary ID # "10" as an example. If
+! that happens to conflict with an existing crypto map, you may choose to use a different ID #.
+crypto map azure-crypto-map 10 ipsec-isakmp
+ set peer 40.76.X.X
+ set security-association lifetime seconds 3600
+ set security-association lifetime kilobytes 102400000
+ set transform-set azure-ipsec-proposal-set
+ match address 101
+ exit
+
+! ---------------------------------------------------------------------------------------------------------------------
+! External interface configuration
+!
+! This section binds to the external interface of the router so that the cross-premise network traffic matching the
+! traffic selector defined in the crypto map will be properly encrypted and transmitted via the IPSec VPN tunnel. It
+! also adjusts the TCPMSS value properly to avoid fragmentation
+interface <NameOfYourOutsideInterface>
+ no crypto map
+ crypto map azure-crypto-map
+ ip tcp adjust-mss 1350
+ exit
