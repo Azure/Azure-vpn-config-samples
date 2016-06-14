@@ -1,5 +1,5 @@
 ciscoasa# Show running-config
-: Saved
+
 :
 : Serial Number: XXXXXXXX
 : Hardware:   ASA5505, 512 MB RAM, CPU Geode 500 MHz
