@@ -61,7 +61,7 @@ The following script may need to be modified to suit your device
 	set security ike proposal azure-proposal authentication-method pre-shared-keys
 	set security ike proposal azure-proposal authentication-algorithm sha1
 	set security ike proposal azure-proposal encryption-algorithm aes-256-cbc
-	set security ike proposal azure-proposal lifetime-seconds 28800
+	set security ike proposal azure-proposal lifetime-seconds 10800
 	set security ike proposal azure-proposal dh-group group2
 	set security ike policy azure-policy mode main
 	set security ike policy azure-policy proposals azure-proposal
