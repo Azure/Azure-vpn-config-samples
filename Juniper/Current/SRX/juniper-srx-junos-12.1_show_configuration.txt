@@ -162,7 +162,7 @@ security {
             dh-group group2;
             authentication-algorithm sha1;
             encryption-algorithm aes-256-cbc;
-            lifetime-seconds 28800;
+            lifetime-seconds 10800;
         }
         policy azure-policy {
             mode main;
