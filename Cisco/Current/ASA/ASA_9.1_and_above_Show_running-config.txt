@@ -44,7 +44,7 @@ object network Gateway
  host 206.X.X.1
 object-group network azure-networks
  description Azure-Virtual-Network
- network-object 10.0.0.0 255.255.255.0
+ network-object 10.0.0.0 255.255.0.0
 object-group network onprem-networks
  description On-premises Network
  network-object 192.168.1.0 255.255.255.0
