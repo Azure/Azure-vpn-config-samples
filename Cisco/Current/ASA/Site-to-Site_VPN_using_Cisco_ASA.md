@@ -65,7 +65,7 @@ In this section we’ll configure site-to-site VPN on ASA 8.4 & 9.x and above.
 
 	object-group network azure-networks
 	description Azure-Virtual-Network
-	network-object 10.0.0.0 255.255.255.0
+	network-object 10.0.0.0 255.255.0.0
 	exit
 	
 	object-group network onprem-networks
