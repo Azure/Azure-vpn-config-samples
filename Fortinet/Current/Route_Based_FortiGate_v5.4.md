@@ -61,6 +61,10 @@ The Azure portal will update within a few moments:
 
 ![](https://github.com/Azure/Azure-vpn-config-samples/blob/master/Fortinet/Images/AzureUP.jpg?raw=true)
 
+Resources:
+
+[Example show full-configuration](https://github.com/Azure/Azure-vpn-config-samples/blob/master/Fortinet/Current/fortigate_show%20full-configuration.txt)
+
  
 
 
