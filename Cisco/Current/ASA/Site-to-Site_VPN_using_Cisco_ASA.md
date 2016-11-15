@@ -186,7 +186,7 @@ Also additionally you can verify using **“Debug ICMP trace”**. Once you enab
 
 	ICMP echo request from outside:192.168.10.0 to inside:10.10.10.0 ID=1 seq=427 len=4
 
-	To Turn off Debug CLI “undebug all” 
+To Turn off Debug CLI **“undebug all”** 
 
 Testing with Traffic:
 In order to test VPN with traffic, create a Virtual Machine in Azure network using the created Virtual Network address space. Virtual Host will get an on IP from AzureVnet 10.0.0.0/24 range. 
@@ -196,3 +196,9 @@ After adding an exception on the Virtual Host firewall, you should be able to pi
 Azure Connection view:
 
 ![](https://github.com/Azure/Azure-vpn-config-samples/blob/master/Cisco/Current/Images/ASAImages/AzureConnected.png?raw=true)
+
+Resources:
+
+- [Show Running Configuration example](https://github.com/Azure/Azure-vpn-config-samples/blob/master/Cisco/Current/ASA/ASA_9.1_and_above_Show_running-config.txt)
+- [Why the Cisco ASA can not work with route based Azure gateways](https://github.com/Azure/Azure-vpn-config-samples/blob/master/Cisco/Current/ASA/Dynamic_ASA_with_Azure.pdf)
+
