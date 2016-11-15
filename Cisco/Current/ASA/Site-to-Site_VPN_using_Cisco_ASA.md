@@ -139,7 +139,7 @@ Using “show run object-group” and **“show run access-list”** to verify o
 
 	My-ASA(config)# show run object-group
 	object-group network azure-networks
-	network-object 10.0.0.0 255.255.255.0
+	network-object 10.0.0.0 255.255.0.0
 	object-group network onprem-networks
 	network-object 192.168.1.0 255.255.255.0
  
