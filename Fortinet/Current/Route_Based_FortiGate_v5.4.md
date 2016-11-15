@@ -7,6 +7,16 @@
 
 ![](https://github.com/Azure/Azure-vpn-config-samples/blob/master/Fortinet/Images/S2S_JASON.jpg?raw=true)
 
+In example:
+
+Vpn Type: **RouteBased**
+
+Local virtual network gateway Ip Address: **8.X.X.X** (WAN interface IP or Public IP address) 
+
+Local Network Prefix: **192.168.100.0/24** (Your on-premises local network. Specify starting IP address of your network.) 
+
+Shared Key: **eFMx0xib2hc5F7FagVOeOcWIfr9Rj9**
+
 After Site 2 Site connection is deployed review your Azure gateway address and your Local gateway IP address:
 ![](https://github.com/Azure/Azure-vpn-config-samples/blob/master/Fortinet/Images/Azure_GW.jpg?raw=true)
 
