@@ -1,7 +1,7 @@
 This configuration template applies to **Cisco ASR 1000 Series** Aggregation Services Routers running **IOS XE 15.2** or greater. It configures an IPSec VPN tunnel connecting your on-premise VPN device with the Azure gateway. Things that begin with "azure-" are variable names and can be changed consistently.
 
 - Vpn Type: **RouteBased**
-- Local virtual network gateway Ip Address: **131.X.X.X** (Outside Interface IP Address of ISR or Public IP address)
+- Local virtual network gateway Ip Address: **131.X.X.X** (Outside Interface IP Address of ASR or Public IP address)
 - Local Network Prefix: **10.0.0.0/8** (Your on-premises local network. Specify starting IP address of your network.)
 - Azure Virtual Network **192.168.1.0/16**
 - Shared Key: **a1af0cdcb0494757a16abe0cc2101c7b**
