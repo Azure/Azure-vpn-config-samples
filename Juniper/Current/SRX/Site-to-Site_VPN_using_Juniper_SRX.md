@@ -4,15 +4,17 @@
 
 [https://github.com/Azure/azure-quickstart-templates/tree/master/201-site-to-site-vpn](https://github.com/Azure/azure-quickstart-templates/tree/master/201-site-to-site-vpn)
 
-![](https://github.com/Azure/Azure-vpn-config-samples/blob/master/Juniper/Current/Images/SRX/Site2Site.png?raw=true)
-
 In example:
 
 Vpn Type: **RouteBased**
 
 Local virtual network gateway Ip Address: **206.X.X.X** (SRX external interface IP or Public IP address) 
 
+Azure Gateway Public IP Address: **40.x.x.x**
+
 Local Network Prefix: **192.168.1.0/24** (Your on-premises local network. Specify starting IP address of your network.) 
+
+Azure VNet Address: **10.0.0.0/16**
 
 Shared Key: **879ac96b53764ad0b6482e55c0e05a0a**
 

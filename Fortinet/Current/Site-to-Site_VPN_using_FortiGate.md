@@ -4,15 +4,17 @@
 
 [https://github.com/Azure/azure-quickstart-templates/tree/master/201-site-to-site-vpn](https://github.com/Azure/azure-quickstart-templates/tree/master/201-site-to-site-vpn)
 
-![](https://github.com/Azure/Azure-vpn-config-samples/blob/master/Fortinet/Images/S2S_JASON.jpg?raw=true)
-
 In example:
 
 Vpn Type: **RouteBased**
 
 Local virtual network gateway Ip Address: **8.X.X.X** (WAN interface IP or Public IP address) 
 
+Azure Gateway Public IP Address: **40.x.x.x**
+
 Local Network Prefix: **192.168.100.0/24** (Your on-premises local network. Specify starting IP address of your network.) 
+
+Azure VNet Address: **10.2.0.0/16**
 
 Shared Key: **eFMx0xib2hc5F7FagVOeOcWIfr9Rj9**
 

@@ -24,16 +24,17 @@ Contact Support at [https://support.software.dell.com/manage-service-request](ht
 
 [![](https://github.com/Azure/Azure-vpn-config-samples/blob/master/Cisco/Current/Images/ASAImages/Deploy.jpg?raw=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2F201-site-to-site-vpn%2Fazuredeploy.json)
 
-[https://github.com/Azure/azure-quickstart-templates/tree/master/201-site-to-site-vpn](https://github.com/Azure/azure-quickstart-templates/tree/master/201-site-to-site-vpn)
-![](https://github.com/Azure/Azure-vpn-config-samples/blob/master/Dell/Current/Images/S2SJASON.png?raw=true)
-
 In example:
 
 Vpn Type: **PolicyBased**
 
-**Local virtual network gateway:** 208.x.x.40 (Sonicwall external interface IP (Public IP address) 
+Local virtual network gateway: **208.x.x.40** (Sonicwall external interface IP (Public IP address)
 
-**Local Network Address:** 192.168.37.0/24 (Your on-premises local network. Specify starting IP address of your network.) 
+Azure Gateway Public IP Address: **40.x.x.x**
+
+Local Network Address: **192.168.37.0/24** (Your on-premises local network. Specify starting IP address of your network.) 
+
+Azure VNet Address: **40.0.0.0/16**
 
 Shared Key: **s30keBEOikz5Orl1GYI8not22dbnuZCJ**
 

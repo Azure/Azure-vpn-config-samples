@@ -42,15 +42,17 @@ Use the below topology as a reference for site-to-site VPN configuration.
 
 [https://github.com/Azure/azure-quickstart-templates/tree/master/201-site-to-site-vpn](https://github.com/Azure/azure-quickstart-templates/tree/master/201-site-to-site-vpn)
 
-![](https://github.com/Azure/Azure-vpn-config-samples/blob/master/Cisco/Current/Images/ASAImages/S2SConfig.png?raw=true)
-
 In example:
 
 Vpn Type: **PolicyBased**
 
-**Local virtual network gateway:** 128.X.X.X (ASA outside interface IP (Public IP address)
+Local virtual network gateway: **128.X.X.X** (ASA outside interface IP (Public IP address)
 
-**Local Network Address:** 192.168.1.0/24 (Your on-premises local network. Specify starting IP address of your network.) 
+Azure Gateway Public IP Address: **104.X.X.X**
+
+Local Network Address: **192.168.1.0/24** (Your on-premises local network. Specify starting IP address of your network.) 
+
+Azure VNet Address: **10.0.0.0/16**
 
 Shared Key: **46d30327e4f5440b971a3d44e34581eb**
 
