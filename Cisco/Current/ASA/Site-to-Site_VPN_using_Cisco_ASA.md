@@ -204,5 +204,5 @@ Azure Connection view:
 Resources:
 
 - [Show Running Configuration example](https://github.com/Azure/Azure-vpn-config-samples/blob/master/Cisco/Current/ASA/ASA_9.1_and_above_Show_running-config.txt)
-- [Why the Cisco ASA can not work with route based Azure gateways](https://github.com/Azure/Azure-vpn-config-samples/blob/master/Cisco/Current/ASA/Dynamic_ASA_with_Azure.pdf)
+- [Why the Cisco ASA will not work with RouteBased Azure gateways](https://github.com/Azure/Azure-vpn-config-samples/blob/master/Cisco/Current/ASA/RoutebasedASA.md)
 
