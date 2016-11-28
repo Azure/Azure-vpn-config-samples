@@ -1,4 +1,4 @@
-### Explaining the limitation with Cisco ASA and Azure Gateway using RouteBased ###
+### Explaining the limitation with Cisco ASA and RouteBased Azure Gateways ###
 
 ASA currently doesn't support [VTI](http://www.cisco.com/en/US/technologies/tk583/tk372/technologies_white_paper0900aecd8029d629_ps6635_Products_White_Paper.html), so RouteBased connections to the Azure gateway are not possible.
 
