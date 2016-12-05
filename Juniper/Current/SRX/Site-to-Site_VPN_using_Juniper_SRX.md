@@ -153,4 +153,4 @@ To exit configuration mode and go back to operational mode, enter **exit** at th
 
 Resources:
 
-[SRX show configuration](https://github.com/Azure/Azure-vpn-config-samples/blob/master/Juniper/Current/SRX/juniper-srx-junos-12.1_show_configuration.txt)
+[SRX show configuration](https://github.com/Azure/Azure-vpn-config-samples/blob/master/Juniper/Current/SRX/juniper-srx-junos_12.1_show_configuration.txt)
