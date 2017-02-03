@@ -26,11 +26,13 @@ After Site 2 Site connection is deployed review your Azure gateway address and y
 **Software Version 8.0.0**
 
 Tunnel Interface
-Inside the WebGUI in **Network** > **Interfaces** > **Tunnel**, Add a new tunnel interface.
+Inside the WebGUI in **Network** > **Interfaces** > **Tunnel**, Add a new tunnel interface
+
 ![](https://github.com/Azure/Azure-vpn-config-samples/blob/master/PaloAlto/Images/Tunnel.jpg?raw=true)
 
 IKE Gateway
-Add an IKE Gateway **Network** > **IKE Gateway** The following values are to be configured: 
+Add an IKE Gateway **Network** > **IKE Gateway** 
+
 ![](https://github.com/Azure/Azure-vpn-config-samples/blob/master/PaloAlto/Images/IKE_GATEWAY.jpg?raw=true)
 
 On the **Advanced** Tab, check Enable NAT traversal if the firewall is behind a NAT device. 
@@ -40,6 +42,7 @@ Create a new IKE Crypto Profile
 ![](https://github.com/Azure/Azure-vpn-config-samples/blob/master/PaloAlto/Images/new_IKE_Cypto.jpg?raw=true)
 
 Example Profile:
+
 ![](https://github.com/Azure/Azure-vpn-config-samples/blob/master/PaloAlto/Images/IKE_Crypto_Profile.jpg?raw=true)
 
 Enable **Liveness Check**
@@ -51,11 +54,12 @@ Add a new IPSec tunnel **Network** > **IPSec Tunnels**
 - Choose the Tunnel Interface created in at the beginning of this document 
 - Create a new IPSec Crypto Profile
 
-![](https://github.com/Azure/Azure-vpn-config-samples/blob/master/PaloAlto/Images/New_IPSEC%20Profile.jpg?raw=true)
+![](https://github.com/Azure/Azure-vpn-config-samples/blob/master/PaloAlto/Images/New_IPSEC_Profile.jpg?raw=true)
 
 ![](https://github.com/Azure/Azure-vpn-config-samples/blob/master/PaloAlto/Images/IPSec_Crypto_Profile.jpg?raw=true)
 
 Completed IPSec Tunnel
+
 ![](https://github.com/Azure/Azure-vpn-config-samples/blob/master/PaloAlto/Images/IPSEC_Tunnel.jpg?raw=true)
 
 Create a Static Route to Azure Vnet
