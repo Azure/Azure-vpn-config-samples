@@ -21,9 +21,9 @@ Shared Key: **eFMx0xib2hc5F7FagVOeOcWIfr9Rj9**
 After Site 2 Site connection is deployed review your Azure gateway address and your Local gateway IP address:
 ![](https://github.com/Azure/Azure-vpn-config-samples/blob/master/Fortinet/Images/Azure_GW.jpg?raw=true)
 
-##Configure the PaloAlto##
+##Configure the paloaltonetworks VPN##
 
-**Software Version 8.0.0**
+**Required Software Version 8.0.0**
 
 Tunnel Interface
 Inside the WebGUI in **Network** > **Interfaces** > **Tunnel**, Add a new tunnel interface
