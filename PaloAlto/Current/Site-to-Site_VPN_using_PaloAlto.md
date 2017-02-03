@@ -62,7 +62,9 @@ Completed IPSec Tunnel
 
 ![](https://github.com/Azure/Azure-vpn-config-samples/blob/master/PaloAlto/Images/IPSEC_Tunnel.jpg?raw=true)
 
-Create a Static Route to Azure Vnet
+Change Virtual Router settings **Network** > **Virtual Router** > *VR_Name*
+
+- Create a Static Route to Azure Vnet
 
 ![](https://github.com/Azure/Azure-vpn-config-samples/blob/master/PaloAlto/Images/Virtual_Router.jpg?raw=true)
 
