@@ -23,11 +23,11 @@ This section specifies the authentication, encryption, hashing, and Diffie-Hellm
 	  encryption aes-cbc-256 aes-cbc-128 3des
 	  integrity sha1
 	  group 2
-	  crypto isakmp keepalive 10 periodic
 	  exit
 	
 	crypto ikev2 policy azure-policy
 	  proposal azure-proposal
+	  dpd 10 30
 	  exit
 	
 	crypto ikev2 keyring azure-keyring
