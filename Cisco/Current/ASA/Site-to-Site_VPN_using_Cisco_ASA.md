@@ -99,7 +99,7 @@ Creating IKEv1 policy parameters for phase I.
 **Step 4:** Configuring IPSec 
 
 Configuring IPSec parameters for Phase II. 
-In the below e.g. **104.x.x.x** IP should be replaced by Virtual network gateway, which is available under the connection object <Pre-Share-Key> should be replaced by Share Key (PSK), which is available on same object, under All settings, Shared key
+In the below configuration, sample IP **104.x.x.x** should be replaced by the Virtual network gateway's IP, which is available under the connection object. **&lt;Pre-Shared-Key&gt;** should be replaced by the Pre-Shared Key (PSK), which is available on the same connection object, under All settings, Shared key.
 
 ![](https://github.com/Azure/Azure-vpn-config-samples/blob/master/Cisco/Current/Images/ASAImages/PSKKEY.png?raw=true)
  
