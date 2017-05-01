@@ -35,8 +35,6 @@ Add an IKE Gateway **Network** > **IKE Gateway**
 
 ![](https://github.com/Azure/Azure-vpn-config-samples/blob/master/PaloAlto/Images/IKE_GATEWAY.jpg?raw=true)
 
-On the **Advanced** Tab, check Enable NAT traversal if the firewall is behind a NAT device. 
-
 Create a new IKE Crypto Profile
 
 ![](https://github.com/Azure/Azure-vpn-config-samples/blob/master/PaloAlto/Images/new_IKE_Cypto.jpg?raw=true)
