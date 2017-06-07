@@ -162,7 +162,7 @@ security {
             dh-group group2;
             authentication-algorithm sha1;
             encryption-algorithm aes-256-cbc;
-            lifetime-seconds 10800;
+            lifetime-seconds 28800;
         }
         policy azure-policy {
             mode main;
@@ -181,7 +181,7 @@ security {
             protocol esp;
             authentication-algorithm hmac-sha1-96;
             encryption-algorithm aes-256-cbc;
-            lifetime-seconds 3600;
+            lifetime-seconds 27000 ;
         }
         policy azure-vpn-policy {
             proposals azure-ipsec-proposal;

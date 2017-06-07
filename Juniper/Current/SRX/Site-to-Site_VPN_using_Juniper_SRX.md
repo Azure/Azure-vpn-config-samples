@@ -63,7 +63,7 @@ The following script may need to be modified to suit your device
 	set security ike proposal azure-proposal authentication-method pre-shared-keys
 	set security ike proposal azure-proposal authentication-algorithm sha1
 	set security ike proposal azure-proposal encryption-algorithm aes-256-cbc
-	set security ike proposal azure-proposal lifetime-seconds 10800
+	set security ike proposal azure-proposal lifetime-seconds 28800
 	set security ike proposal azure-proposal dh-group group2
 	set security ike policy azure-policy mode main
 	set security ike policy azure-policy proposals azure-proposal
@@ -75,7 +75,7 @@ The following script may need to be modified to suit your device
 	set security ipsec proposal azure-ipsec-proposal protocol esp
 	set security ipsec proposal azure-ipsec-proposal authentication-algorithm hmac-sha1-96
 	set security ipsec proposal azure-ipsec-proposal encryption-algorithm aes-256-cbc
-	set security ipsec proposal azure-ipsec-proposal lifetime-seconds 3600
+	set security ipsec proposal azure-ipsec-proposal lifetime-seconds 27000
 	set security ipsec policy azure-vpn-policy proposals azure-ipsec-proposal
 	set security ipsec vpn azure-ipsec-vpn ike gateway azure-gateway
 	set security ipsec vpn azure-ipsec-vpn ike ipsec-policy azure-vpn-policy
