@@ -6,15 +6,15 @@
 
 ! ---------------------------------------------------------------------------------------------------------------------
 ! ACL rules
-! 
+!
 ! Proper ACL rules are needed for permitting cross-premise network traffic.
 ! You should also allow inbound UDP/ESP traffic for the interface which will be used for the IPSec tunnel.
-! In this example 10.0.0.0/8 is the on premises network & 192.168.1.0/16 is the Azure Virtual Network
+! In this example 10.0.0.0/8 is the on premises network & 192.168.0.0/16 is the Azure Virtual Network
 access-list 101 permit ip 10.0.0.0 0.255.255.255 192.168.0.0 0.0.255.255
 
 ! ---------------------------------------------------------------------------------------------------------------------
 ! Internet Key Exchange (IKE) configuration
-! 
+!
 ! This section specifies the authentication, encryption, hashing, Diffie-Hellman, and lifetime parameters for the Phase
 ! 1 negotiation and the main mode security association. We have picked an arbitrary policy # "10" as an example. If
 ! that happens to conflict with an existing policy, you may choose to use a different policy #.
@@ -30,7 +30,7 @@ crypto isakmp key XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX address 40.76.X.X
 
 ! ---------------------------------------------------------------------------------------------------------------------
 ! IPSec configuration
-! 
+!
 ! This section specifies encryption, authentication, tunnel mode properties for the Phase 2 negotiation
 crypto ipsec transform-set azure-ipsec-proposal-set esp-aes 256 esp-sha-hmac
  mode tunnel
