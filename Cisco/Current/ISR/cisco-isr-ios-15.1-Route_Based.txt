@@ -8,10 +8,10 @@
 
 ! ---------------------------------------------------------------------------------------------------------------------
 ! ACL rules
-! 
+!
 ! Proper ACL rules are needed for permitting cross-premise network traffic.
 ! You should also allow inbound UDP/ESP traffic for the interface which will be used for the IPSec tunnel.
-! In this example 10.0.0.0/8 is the on premises network & 192.168.1.0/16 is the Azure Virtual Network
+! In this example 10.0.0.0/8 is the on premises network & 192.168.0.0/16 is the Azure Virtual Network
 ! In this example the Azure Gateway IP Address is 40.76.X.X and your Outside Interface IP Address is 131.X.X.X
 
 access-list 101 permit ip 10.0.0.0 0.255.255.255 192.168.0.0 0.0.255.255
@@ -20,9 +20,9 @@ access-list 102 permit esp host 40.76.X.X host 131.X.X.X
 
 ! ---------------------------------------------------------------------------------------------------------------------
 ! Internet Key Exchange (IKE) configuration
-! 
+!
 ! This section specifies the authentication, encryption, hashing, and Diffie-Hellman group parameters for the Phase
-! 1 negotiation and the main mode security association. 
+! 1 negotiation and the main mode security association.
 ! In this example the Azure Gateway IP Address is 40.76.X.X
 
 crypto ikev2 proposal azure-proposal
@@ -52,7 +52,7 @@ crypto ikev2 profile azure-profile
 
 ! ---------------------------------------------------------------------------------------------------------------------
 ! IPSec configuration
-! 
+!
 ! This section specifies encryption, authentication, tunnel mode properties for the Phase 2 negotiation
 
 crypto ipsec transform-set azure-ipsec-proposal-set esp-aes 256 esp-sha-hmac
@@ -62,13 +62,13 @@ crypto ipsec transform-set azure-ipsec-proposal-set esp-aes 256 esp-sha-hmac
 ! ---------------------------------------------------------------------------------------------------------------------
 ! Crypto map configuration
 !
-! This section defines a crypto profile that binds the cross-premise network traffic to the IPSec transform set and remote peer.  
-! We also bind the IPSec policy to the virtual tunnel interface, through which cross-premise traffic will be transmitted.  
+! This section defines a crypto profile that binds the cross-premise network traffic to the IPSec transform set and remote peer.
+! We also bind the IPSec policy to the virtual tunnel interface, through which cross-premise traffic will be transmitted.
 ! We have picked an arbitrary tunnel id "1" as an example. If that happens to conflict with an existing virtual tunnel interface,
 ! you may choose to use a different id.
 ! The IP address 169.254.0.1 acts as the “inner” address of the tunnel. Essentially it has one job, to deliver traffic from the Azure side
 ! to the on-prem side. As it does not need to reach the Internet, it being routable is not necessary. The ISR has an internal routing table
-! and knows what to do with the traffic. You should be able to use any 169.254.X.X address. 
+! and knows what to do with the traffic. You should be able to use any 169.254.X.X address.
 
 crypto ipsec profile azure-vti
   set transform-set azure-ipsec-proposal-set
