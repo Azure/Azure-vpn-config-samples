@@ -69,7 +69,7 @@ crypto ipsec transform-set azure-ipsec-proposal-set esp-aes 256 esp-sha-hmac
 ! The IP address 169.254.0.1 acts as the “inner” address of the tunnel. Essentially it has one job, to deliver traffic from the Azure side
 ! to the on-prem side. As it does not need to reach the Internet, it being routable is not necessary. The ASR has an internal routing table
 ! and knows what to do with the traffic. You should be able to use any 169.254.X.X address. However if you plan to do a BGP enabled
-! VPN, make sure that the soruce IP of the BGP session is _not_ 169.254.x.x, as the VPN gateway won't form a relationship with it if so.
+! VPN, make sure that the source IP of the BGP session is _not_ 169.254.x.x, as the VPN gateway won't form a relationship with it if so.
 ! Or if you need to use the tunnel IP as a source, choose an IP address outside 169.254.x.x. 
 
 crypto ipsec profile azure-vti
