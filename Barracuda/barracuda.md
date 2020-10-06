@@ -9,7 +9,7 @@ The configuration example in the sections below has been tested on the following
 - Licensed software: ClougGen Firewall OS
 
 ## <span style="color:#0080FF">High level architecture </span>
-<img src="/Images/Architecture.jpg" width="600"/><p>
+<img src="./Images/Architecture.jpg" width="600"/><p>
 
 **VPN architecture**<p>
 
