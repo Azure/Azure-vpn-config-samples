@@ -103,5 +103,5 @@ Next, configure the following items:
 - Open Configuration Tree &#10132; Box &#10132; Virtual Servers &#10132;  <span style="color:#0080FF">\<virtual server \></span> &#10132; Assigned Services &#10132; VPN (VPN-Service ) &#10132;  Service Properties
 - Enable VPN service
 - Screen:<p>
-    <img style="border:5px groove gold;" src="images/Service_properties.JPG" width="300"/><p>
+    <img  src="images/Service_properties.JPG" width="300" border:5px groove gold;/><p>
     **Service properties entry screen**<p>
