@@ -9,7 +9,7 @@ The configuration example in the sections below has been tested on the following
 - Licensed software: ClougGen Firewall OS
 
 ## <span style="color:#0080FF">High level architecture </span>
-<img src="Images/Architecture.jpg" width="600"/><p>
+<img src="images/architecture.jpg" width="600"/><p>
 
 **VPN architecture**<p>
 
@@ -18,7 +18,7 @@ The configuration example in the sections below has been tested on the following
 ## <span style="color:#0080FF">In the Azure portal </span>
 
 You need to create objects representing the Barracuda gateway, the Azure gateway, and the connection between them. The easiest way to do this is with the Azure template to create a Site-to-Site VPN:<p>
-        [<img src="Images/Create_a_Site-to-Site_VPN_Connection.jpg" width="600"/>](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2F201-site-to-site-vpn%2Fazuredeploy.json)<p>
+        [<img src="images/Create_a_Site-to-Site_VPN_Connection.JPG" width="600"/>](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2F201-site-to-site-vpn%2Fazuredeploy.json)<p>
 
 
 In the wizard enter the following:
@@ -32,11 +32,11 @@ In the wizard enter the following:
 - Shared Key: **s30keBEOikz5Orl1GYI8not22dbnuZCJ**
 
 After the deployment is finished, review the three items created. Screens:<p>
-    <img src="Images/Azure_gateway.jpg" width="600"/><p>
+    <img src="images/Azure_gateway.JPG" width="600"/><p>
     **The Azure gateway**<p>
-    <img src="Images/Local_gateway.jpg" width="600"/><p>
+    <img src="images/Local_gateway.JPG" width="600"/><p>
     **The local gateway**<p>
-    <img src="Images/Connection.jpg" width="600"/><p>
+    <img src="images/Connection.JPG" width="600"/><p>
     **The connection between them**<p>
 
 Once the Azure deployment is done, you can configure the Barracuda firewall.
@@ -47,7 +47,7 @@ Barracuda guidance can be found [here](https://campus.barracuda.com/product/clou
 
 Start by logging in to the Barracuda firewall as administrator
 
-<img src="Images/Barracuda_login.jpg" width="300"/>
+<img src="images/Barracuda_login.JPG" width="300"/>
 
 **Barracuda CloudGen Firewall login screen**
 
@@ -57,7 +57,7 @@ Next, configure the following items:
 
 - Open Configuration Tree &#10132; Box &#10132; Virtual Servers &#10132; <span style="color:#0080FF">\<virtual server \></span> &#10132; Assigned Services &#10132; VPN-Service &#10132; 
 - Double-click on Site to Site<p> 
-    <img src="Images/Site_to_Site.jpg" width="300"/><p>
+    <img src="images/Site_to_Site.JPG" width="300"/><p>
 - Select IPSec IKEv2 Tunnels tab
 - Right click in white space, select "New IPSec IKEv2 Tunnel"
 - Sample entries
@@ -68,9 +68,9 @@ Next, configure the following items:
     - Shared secret: xxxxxxxxx (from Azure VPN Gateway configuration above)
     - Enabled: yes
 - Screens<p>
-        <img src="Images/IPSec_IKEv2_Tunnel_pt_1.jpg" width="300"/><p>
+        <img src="images/IPSec_IKEv2_Tunnel_pt_1.JPG" width="300"/><p>
         **New IPSec IKEv2 Tunnel entry screen, top**<p><p>
-        <img src="Images/IPSec_IKEv2_Tunnel_pt_2.jpg" width="300"/><p>
+        <img src="images/IPSec_IKEv2_Tunnel_pt_2.JPG" width="300"/><p>
         **New IPSec IKEv2 Tunnel entry screen, bottom**
 
 ### <span style="color:#0080FF">Forwarding Rule for traffic from local network to Azure</span>
@@ -83,7 +83,7 @@ Next, configure the following items:
     - Destination: 10.2.0.0/16 (IP range in Azure that the gateway serves, here shown as a private VNET address, but does not have to be)
 - Activated: yes
 - Screen:<p>
-    <img src="Images/Outbound_rule.jpg" width="300"/><p>
+    <img src="images/Outbound_rule.JPG" width="300"/><p>
     **New outbound Forwarding Rule entry screen**<p>
 
 ### <span style="color:#0080FF">Forwarding Rule for traffic from Azure to local network </span>
@@ -95,7 +95,7 @@ Next, configure the following items:
     - Destination: <explicit-dest> 24.x.x.x (Public IP of Barracuda)
 - Activated: yes
 - Screen:<p>
-    <img src="Images/Inbound_rule.jpg" width="300"/><p>
+    <img src="images/Inbound_rule.JPG" width="300"/><p>
     **New inbound Forwarding Rule entry screen**<p>
 
 ### <span style="color:#0080FF">Service properties</span>
@@ -103,5 +103,5 @@ Next, configure the following items:
 - Open Configuration Tree &#10132; Box &#10132; Virtual Servers &#10132;  <span style="color:#0080FF">\<virtual server \></span> &#10132; Assigned Services &#10132; VPN (VPN-Service ) &#10132;  Service Properties
 - Enable VPN service
 - Screen:<p>
-    <img src="Images/Service_properties.jpg" width="300"/><p>
+    <img src="images/Service_properties.JPG" width="300"/><p>
     **Service properties entry screen**<p>
