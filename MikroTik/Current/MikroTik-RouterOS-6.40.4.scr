@@ -1,0 +1,33 @@
+# Insert the source NAT rule between on-premise gateway and Azure
+# Virtual Network
+# YOU PROBABLY NEED TO MOVE THE NAT RULE (OR IT DOESN'T WORK).
+# THE PRIORITY OF THE NAT RULE DEPENDS ON YOUR LOCAL NETWORK CONFIGURATION.
+
+/ip firewall nat add chain=srcnat action=accept src-address=10.90.0.0/16 \
+dst-address=10.91.0.0/16
+
+# Add new IPSec Proposal (Transform set)
+
+/ip ipsec proposal add name="azure-ipsec-proposal" auth-algorithms=sha1 \
+enc-algorithms=aes-256-cbc lifetime=2h pfs-group=modp1024
+
+# Add new IPSec Peer
+
+/ip ipsec peer add address=13.X.X.X/32 auth-method=pre-shared-key \
+secret="a1af0cdcb0494757a16abe0cc2101c7b" generate-policy=no \
+policy-template-group=default exchange-mode=ike2 send-initial-contact=yes \
+hash-algorithm=sha1 enc-algorithm=aes-256 dh-group=modp1024 \
+lifetime=2h dpd-interval=2m
+
+# Add a new IPSec Policy
+
+/ip ipsec policy add src-address=10.90.0.0/16 src-port=any \
+dst-address=10.91.0.0/16 dst-port=any protocol=all action=encrypt \
+level=require ipsec-protocol=esp tunnel=yes sa-src-address=131.X.X.X \
+sa-dst-address=13.X.X.X proposal=azure-ipsec-proposal
+
+# Set TCPMSS to 1350 (varies depends on your local network configuration)
+
+/ip firewall mangle add chain=forward action=change-mss new-mss=1350 \
+passthrough=yes tcp-flags=syn protocol=tcp tcp-mss=!0-1350 log=no \
+log-prefix=""
